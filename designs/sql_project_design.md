@@ -120,53 +120,49 @@ end
 Write Ruby code that defines the expected behaviour of the Repository class, following your design from the table written in step 5.
 ```ruby
 # 1 return all
-repo = AlbumRepository.new
-albums = repo.all # an array of Albums objects
-albums.length # => 2
-albums.first.id # => '1'
-albums.first.title # => 'Future Days'
+repo = AccountRepository.new
+accounts = repo.all # an array of Albums objects
+accounts.length # => 2
+accounts.first.id # => '1'
+accounts.first.username # => 'user_1'
+accounts.first.email_address # => 'user1@email.com'
 
-# 2 find a single album by id
+# 2 find a single xxx by id
 repo = AlbumRepository.new
 id_to_find = 1
-album = repo.find(id_to_find) # an array of Albums objects
-album.first.id # => '1'
-album.first.title # => 'Future Days'
+account = repo.find(id_to_find) # an array of xxx objects
+account.first.id # => '1'
+account.first.username # => 'user_1'
 
-# 3 create new album
+# 3 create new xxx
 repo = AlbumRepository.new
-album = Album.new
-album.title = 'Title'
-album.release_year = '2023'
-album.artist_id = '1'
-repo.create(album)
-albums = repo.all
-# expect(albums).to include(have_attributes title: album.title,
-# release_year: album.release_year,
-# artist_id: album.artist_id
-# )
-expect(albums[-1].title).to eq 'Title'
-expect(albums[-1].release_year).to eq '2023'
-expect(albums[-1].artist_id).to eq '1'
+account = Album.new
+account.username = 'new_user'
+account.email_address = 'new@new.com'
+repo.create(account)
+accounts = repo.all
+expect(accounts[-1].username).to eq 'new_user'
+expect(accounts[-1].email_address).to eq 'new@new.com'
+expect(accounts[-1].id).to eq '3'
 
-# 4 delete album
-repo = AlbumRepository.new
+# 4 delete xxx
+repo = AccountRepository.new
 id_to_delete = 1
 repo.delete(id_to_delete)
-albums = repo.all # returns an array of all albums
-albums.length # => 1
-albums[0].id # => '2'
+accounts = repo.all # returns an array of all xxx
+accounts.length # => 1
+accounts[0].id # => '2'
 
-# 5 update album
-repo = AlbumRepository.new
+# 5 update xxx
+repo = AccountRepository.new
 id_to_update = 1
-album = repo.find(id_to_update)
-album.title = "Past Days"
-album.title = "Folk"
-repo.update(album)
-updated_album = repo.find(id_to_update)
-updated_album.title # => "Past Days"
-updated_album.genre # => "Folk"
+account = repo.find(id_to_update)
+account.username = "sameButDifferent"
+account.email_address = "folk@gmail.co.uk"
+repo.update(account)
+updated_account = repo.find(id_to_update)
+updated_account.username # => 
+updated_account.email_address # => 
 ```
 
 ## 7. Reload the SQL seeds before each test run

@@ -1,3 +1,0 @@
-class Account
-  attr_accessor :username, :email_address
-end

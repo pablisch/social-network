@@ -3,9 +3,21 @@ require_relative './post'
 class PostRepository
   # return all xxx objects from table
     def all
-      # executes the SQL query:
-      # SELECT id, title, release_year, artist_id FROM artists;
-      # returns an array of album objects as hashes
+      sql = 'SELECT * FROM posts;'
+      results = DatabaseConnection.exec_params(sql, [])
+      # p results
+      # p results[0]
+      posts = []
+      results.each do |record|
+        # p record
+        post = Post.new
+        # p post
+        # post.id = record['id']
+        post.title = record['title']
+        post.content = record['content']
+        post.views = record['views']
+        post.account_id = record['account_id']
+      end
     end
   
   # Find and return a single xxx object
@@ -14,7 +26,6 @@ class PostRepository
       # SELECT id, title, release_year, artist_id FROM artists WHERE id = $1;
       # returns an array of album objects as hashes
     end
-  end
   
   # Create a new xxx object. Returns nothing
     def create(post)
