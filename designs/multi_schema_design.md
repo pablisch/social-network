@@ -5,36 +5,36 @@ Copy this recipe template to design and create two related database tables from 
 
 As a social network user,
 So I can have my information registered,
-I'd like to have a user account with my email address.
+I'd like to have a [user account] with my [email address].
 
 As a social network user,
 So I can have my information registered,
-I'd like to have a user account with my username.
+I'd like to have a user account with my [username].
 
 As a social network user,
 So I can write on my timeline,
-I'd like to create posts associated with my user account.
+I'd like to create [posts] associated with my [user account].
 
 As a social network user,
 So I can write on my timeline,
-I'd like each of my posts to have a title and a content.
+I'd like each of my posts to have a [title] and a [content].
 
 As a social network user,
 So I can know who reads my posts,
-I'd like each of my posts to have a number of views.
+I'd like each of my posts to have a [number of views].
 
-> Nouns: students, names, cohorts, starting_dates, cohort_names
+> Nouns: user_account, email_address, username, posts, title, content, number_of_views
 
-> Nouns: cohorts => name, starting_date
-> Nouns: students => name
+> Nouns: user_account => username, email_address
+> Nouns: posts => title, content, views
 
 ## 2. Infer the Table Name and Columns
 Put the different nouns in this table. Replace the example with your own nouns.
 
-| Record	   | Properties           |
-| ---------- | -------------------- |
-| cohort	   | name, starting_date  |
-| student	   | name                 |
+| Record	   | Properties              |
+| ---------- | ----------------------- |
+| account	   | username, email_address |
+| posts  	   | title, content, views   |
 
 ## 3. Decide the column types.
 Here's a full documentation of [PostgreSQL data types](https://www.postgresql.org/docs/current/datatype.html).
@@ -52,21 +52,23 @@ If YES to both then it is a many-to-many relationship
 -- EXAMPLE
 -- file: albums_table.sql
 
-CREATE TABLE cohorts (
+CREATE TABLE accounts (
   id SERIAL PRIMARY KEY,
-  name text,
-  starting_date date,
+  username TEXT,
+  email_address TEXT
 );
 
 -- Then the table with the foreign key first.
-CREATE TABLE students (
+CREATE TABLE posts (
   id SERIAL PRIMARY KEY,
-  name text,
+  title TEXT,
+  content TEXT,
+  views INT,
 -- The foreign key name is always {other_table_singular}_id
-  cohort_id int,
-  constraint fk_artist foreign key(cohort_id)
-    references cohorts(id)
+  account_id int,
+  constraint fk_account foreign key(account_id)
+    references accounts(id)
     on delete cascade
 );
 ## 6. Create the table.
-psql -h 127.0.0.1 database_name < albums_table.sql
+psql -h 127.0.0.1 database_name < account_table.sql

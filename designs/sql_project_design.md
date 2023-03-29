@@ -7,10 +7,10 @@
 
 ## 1. Design and create the Table
 
-Table: albums
-
-Columns:
-id | title | genre
+| Record	   | Properties              |
+| ---------- | ----------------------- |
+| account	   | username, email_address |
+| posts  	   | title, content, views   |
 
 🦠 Create the table AND table_test and insert data from seed: 
 ```bash
@@ -29,10 +29,16 @@ psql -h 127.0.0.1 your_database_name_test < {table_name}.sql
 >> spec/seeds_albums.sql
 
 ```sql
-TRUNCATE TABLE albums RESTART IDENTITY; -- 🦠 TABLE NAME! 🦠 replace with your own table name.
+TRUNCATE TABLE accounts RESTART IDENTITY; -- 🦠 TABLE NAME! 🦠 replace with your own table name.
 
-INSERT INTO albums (title, release_year, artist_id) VALUES ('Future Days', '1974', 1);
-INSERT INTO albums (title, release_year, artist_id) VALUES ('Tell Her', '1969', 2);
+INSERT INTO accounts (username, email_address) VALUES ('user_1', 'user1@email.com');
+INSERT INTO accounts (username, email_address) VALUES ('another_user', 'mail@email.co.uk');
+```
+```sql
+TRUNCATE TABLE posts RESTART IDENTITY; -- 🦠 TABLE NAME! 🦠 replace with your own table name.
+
+INSERT INTO posts (title, content, views, account_id) VALUES ('title_1', 'post_1_content', 10, 1);
+INSERT INTO posts (title, content, views, account_id) VALUES ('another_title', 'another_content', 3, 2);
 ```
 
 To insert this data into your test database => psql -h 127.0.0.1 <your_database_name>_test < seeds_{table_name}.sql
@@ -41,12 +47,20 @@ To insert this data into your test database => psql -h 127.0.0.1 <your_database_
 Usually, the Model class name will be the capitalised table name (single instead of plural). The same name is then suffixed by Repository for the Repository class name.
 
 ```ruby
-# model class FILE lib/album.rb
-class Album
+# model class FILE lib/xxx.rb
+class Account
 end
 
-# repository class FILE lib/album_repository.rb
-class AlbumRepository
+# repository class FILE lib/xxx_repository.rb
+class AccountRepository
+end
+
+# model class FILE lib/yyy.rb
+class Post
+end
+
+# repository class FILE lib/yyy_repository.rb
+class PostRepository
 end
 ```
 
@@ -54,15 +68,19 @@ end
 Define the attributes of your Model class. You can usually map the table columns to the attributes of the class, including primary and foreign keys.
 
 ```ruby
-class Album
-  attr_accessor :id, :title, :release_year, :artist_id
+class Account
+  attr_accessor :username, :email_address
+end
+
+class Post
+  attr_accessor :title, :content, :views, :account_id
 end
 ```
 
 ## 5. Define the Repository Class interface
 ```ruby
 # 1 repository class FILE lib/xxx_repository.rb
-class AlbumRepository
+class AccountRepository
 # return all xxx objects from table
   def all
     # executes the SQL query:
