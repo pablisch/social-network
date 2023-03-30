@@ -35,7 +35,9 @@ class PostRepository
   
   # Create a new xxx object. Returns nothing
     def create(post)
-      sql = 'INSERT INTO posts'
+      sql = 'INSERT INTO posts (title, content, views, account_id) VALUES ($1, $2, $3, $4);'
+      params = [post.title, post.content, post.views, post.account_id]
+      DatabaseConnection.exec_params(sql, params)
     end
   
   # delete an xxx object identified by id. Returns nothing

@@ -37,6 +37,7 @@ RSpec.describe PostRepository do
     post = Post.new
     post.title = "New title"
     post.content = "New content"
+    post.views = "13"
     post.account_id = "1"
     repo.create(post)
     id_to_find = 3
@@ -44,6 +45,7 @@ RSpec.describe PostRepository do
     expect(post.id).to eq('3')
     expect(post.title).to eq('New title')
     expect(post.content).to eq('New content')
+    expect(post.views).to eq('13')
     expect(post.account_id).to eq('1')
   end
 end
