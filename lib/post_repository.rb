@@ -20,15 +20,22 @@ class PostRepository
   
   # Find and return a single xxx object
     def find(id)
-      # executes the SQL query:
-      # SELECT id, title, release_year, artist_id FROM artists WHERE id = $1;
-      # returns an array of album objects as hashes
+      sql = 'SELECT * FROM posts WHERE id = $1;'
+      params = [id]
+      results = DatabaseConnection.exec_params(sql, params)
+      record = results[0]
+      post = Post.new
+      post.id = record['id']
+      post.title = record['title']
+      post.content = record['content']
+      post.views = record['views']
+      post.account_id = record['account_id']
+      return post
     end
   
   # Create a new xxx object. Returns nothing
     def create(post)
-      # executes the SQL query:
-      # INSERT INTO albums (title, release_year, artist_id) VALUES ($1, $2, $3);
+      sql = 'INSERT INTO posts'
     end
   
   # delete an xxx object identified by id. Returns nothing
