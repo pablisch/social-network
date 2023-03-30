@@ -42,13 +42,15 @@ class PostRepository
   
   # delete an xxx object identified by id. Returns nothing
     def delete(id)
-      # executes the SQL query:
-      # DELETE FROM albums WHERE id = $1;
+      sql = 'DELETE FROM posts WHERE id = $1;'
+      params = [id]
+      DatabaseConnection.exec_params(sql, params)
     end
   
   # update an xxx object identified by id. Returns nothing
     def update(post)
-      # executes the SQL query:
-      # UPDATE albums SET title = $1, release_year = $2 WHERE id = $3;
+      sql = ('UPDATE posts SET title = $1, content = $2, views = $3, account_id = $4 WHERE id = $5;')
+      params = [post.title, post.content, post.views, post.account_id, post.id]
+      DatabaseConnection.exec_params(sql, params)
     end
   end

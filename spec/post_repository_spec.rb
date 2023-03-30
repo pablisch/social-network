@@ -29,6 +29,7 @@ RSpec.describe PostRepository do
     expect(post.id).to eq('1')
     expect(post.title).to eq('title_1')
     expect(post.content).to eq('post_1_content')
+    expect(post.views).to eq('10')
     expect(post.account_id).to eq('1')
   end
 
@@ -47,5 +48,34 @@ RSpec.describe PostRepository do
     expect(post.content).to eq('New content')
     expect(post.views).to eq('13')
     expect(post.account_id).to eq('1')
+  end
+
+  it "deletes a Post object" do
+    repo = PostRepository.new
+    id_to_delete = 2
+    repo.delete(id_to_delete)
+    posts = repo.all
+    expect(posts[-1].id).to eq('1')
+    expect(posts[-1].title).to eq('title_1')
+    expect(posts[-1].content).to eq('post_1_content')
+    expect(posts[-1].views).to eq('10')
+    expect(posts[-1].account_id).to eq('1')
+  end
+
+  it "updates a Post object" do
+    repo = PostRepository.new
+    id_to_update = 1
+    post = repo.find(id_to_update)
+    post.title = "title_1b"
+    post.content = "post_1b_content"
+    post.views = "1000"
+    post.account_id = "2"
+    repo.update(post)
+    posts = repo.all
+    expect(posts[1].id).to eq('1')
+    expect(posts[1].title).to eq('title_1b')
+    expect(posts[1].content).to eq('post_1b_content')
+    expect(posts[1].views).to eq('1000')
+    expect(posts[1].account_id).to eq('2')
   end
 end
