@@ -5,19 +5,17 @@ class PostRepository
     def all
       sql = 'SELECT * FROM posts;'
       results = DatabaseConnection.exec_params(sql, [])
-      # p results
-      # p results[0]
       posts = []
       results.each do |record|
-        # p record
         post = Post.new
-        # p post
-        # post.id = record['id']
+        post.id = record['id']
         post.title = record['title']
         post.content = record['content']
         post.views = record['views']
         post.account_id = record['account_id']
+        posts << post
       end
+      return posts
     end
   
   # Find and return a single xxx object

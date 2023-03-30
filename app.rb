@@ -1,5 +1,6 @@
 require_relative 'lib/database_connection'
 require_relative 'lib/account_repository'
+require_relative 'lib/post_repository'
 
 DatabaseConnection.connect('social_network')
 
@@ -36,3 +37,8 @@ DatabaseConnection.connect('social_network')
 # account_repository.update(ac3)
 # account_repository.all.each { |item| p item }
 # puts
+
+post_repository = PostRepository.new
+
+post_repository.all.each { |item| p item }
+puts

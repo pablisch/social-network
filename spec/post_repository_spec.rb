@@ -13,15 +13,14 @@ RSpec.describe PostRepository do
   end
 
   it "returns all Post objects in posts table" do
-    repo2 = PostRepository.new
-    p repo2
-    posts = repo2.all
+    repo = PostRepository.new
+    p repo
+    posts = repo.all
     p posts
     p posts.first
-    # p posts.first.id
-    # expect(posts.length).to eq(2)
-    # expect(posts[0].id).to eq('1')
-    expect(posts[0].title).to eq('title_1')
+    expect(posts.length).to eq(2)
+    expect(posts[0].id).to eq('1')
+    expect(posts.first.title).to eq('title_1')
     expect(posts[0].content).to eq('post_1_content')
     expect(posts[0].account_id).to eq('1')
   end
