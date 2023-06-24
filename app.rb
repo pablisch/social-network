@@ -39,6 +39,5 @@ DatabaseConnection.connect('social_network')
 # puts
 
 post_repository = PostRepository.new
-
 post_repository.all.each { |item| p item }
 puts
